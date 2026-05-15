@@ -41,141 +41,95 @@ DEFAULT_OUTPUT = (
 )
 
 
-SECTIONS: list[tuple[str, list[tuple[str, str, str]]]] = [
+SCENARIOS: list[tuple[str, str, str]] = [
     (
-        "I. Authentification (page Login)",
-        [
-            (
-                "Je suis un visiteur (non connecté).",
-                "Je ne remplis pas le champ e-mail ou le champ password du login "
-                "administrateur et je clique sur le bouton « Se connecter ».",
-                "Je reste sur la page Login et je suis invité à remplir le champ "
-                "manquant.",
-            ),
-            (
-                "Je suis un visiteur (non connecté).",
-                "Je remplis le champ e-mail du login administrateur au mauvais "
-                "format (sans la forme chaîne@chaîne) et je clique sur le bouton "
-                "« Se connecter ».",
-                "Je reste sur la page Login et je suis invité à remplir le champ "
-                "e-mail au bon format.",
-            ),
-            (
-                "Je suis un visiteur (non connecté).",
-                "Je remplis le champ e-mail et le champ password du login "
-                "administrateur dans le bon format et je clique sur le bouton "
-                "« Se connecter ».",
-                "Je suis authentifié en tant qu'administrateur RH et je suis "
-                "redirigé vers la page Dashboard (« Validations »).",
-            ),
-            (
-                "Je suis un administrateur authentifié sur la page Dashboard.",
-                "Je rafraîchis la page ou je reviens sur l'application.",
-                "Ma session est conservée (via le localStorage) et je reste sur "
-                "la page Dashboard sans devoir me reconnecter.",
-            ),
-        ],
+        "Je suis un visiteur (non connecté).",
+        "Je ne remplis pas le champ e-mail ou le champ password du login "
+        "administrateur et je clique sur le bouton \"Se connecter\".",
+        "Je reste sur la page Login et je suis invité à remplir le champ "
+        "manquant.",
     ),
     (
-        "II. Page Dashboard – vue globale des notes de frais",
-        [
-            (
-                "Je suis un administrateur RH authentifié.",
-                "J'arrive sur la page Dashboard.",
-                "Je vois trois sections (« En attente », « Validé », « Refusé ») "
-                "avec le nombre de notes de frais pour chaque statut, ainsi que "
-                "la zone « Validations » à droite avec la grande icône Billed.",
-            ),
-            (
-                "Je suis sur la page Dashboard et au moins une note de frais "
-                "existe pour le statut « En attente ».",
-                "Je clique sur la flèche de la section « En attente ».",
-                "La section se déplie et affiche la liste des cartes des notes "
-                "de frais correspondantes (nom de l'employé, libellé, montant, "
-                "date, type).",
-            ),
-            (
-                "Je suis sur la page Dashboard et la section « En attente » est "
-                "dépliée.",
-                "Je clique à nouveau sur la flèche de la même section.",
-                "La section se replie et les cartes des notes de frais "
-                "associées ne sont plus affichées.",
-            ),
-            (
-                "Je suis sur la page Dashboard et plusieurs sections sont "
-                "dépliées simultanément.",
-                "Je clique sur la flèche d'une autre section (par exemple "
-                "« Validé »).",
-                "La section ciblée se déplie indépendamment des autres ; chaque "
-                "section conserve son propre état (ouvert/fermé).",
-            ),
-        ],
+        "Je suis un visiteur (non connecté).",
+        "Je remplis le champ e-mail du login administrateur au mauvais format "
+        "(sans la forme chaîne@chaîne) et je clique sur le bouton "
+        "\"Se connecter\".",
+        "Je reste sur la page Login et je suis invité à remplir le champ "
+        "e-mail au bon format.",
     ),
     (
-        "III. Page Dashboard – consultation d'une note de frais",
-        [
-            (
-                "Je suis sur la page Dashboard et la section « En attente » est "
-                "dépliée.",
-                "Je clique sur la carte d'une note de frais.",
-                "Le formulaire de détail de la note de frais s'affiche à droite "
-                "(type, nom, date, commentaire, montant, TVA, justificatif) et "
-                "les boutons « Refuser » et « Accepter » apparaissent car la "
-                "note est au statut « En attente ».",
-            ),
-            (
-                "Je suis sur la page Dashboard et le formulaire de détail d'une "
-                "note de frais est ouvert.",
-                "Je clique une deuxième fois sur la carte de la même note de "
-                "frais.",
-                "Le formulaire de détail se ferme et la grande icône Billed "
-                "(big-billed-icon) réapparaît à droite.",
-            ),
-            (
-                "Je suis sur la page Dashboard et le formulaire de détail d'une "
-                "note de frais est ouvert.",
-                "Je clique sur l'icône en forme d'œil située dans le "
-                "formulaire.",
-                "Une modale s'ouvre et affiche le justificatif (image du reçu) "
-                "associé à la note de frais.",
-            ),
-        ],
+        "Je suis un visiteur (non connecté).",
+        "Je remplis le champ e-mail du login administrateur au bon format "
+        "(sous la forme chaîne@chaîne), le champ password du login "
+        "administrateur et je clique sur le bouton \"Se connecter\".",
+        "Je suis envoyé sur la page Dashboard.",
     ),
     (
-        "IV. Page Dashboard – validation / refus d'une note de frais",
-        [
-            (
-                "Je suis sur la page Dashboard et le formulaire d'une note de "
-                "frais au statut « En attente » est ouvert.",
-                "Je saisis éventuellement un commentaire puis je clique sur le "
-                "bouton « Accepter ».",
-                "Le statut de la note de frais passe à « accepted », mon "
-                "commentaire est enregistré et je suis redirigé vers la vue "
-                "principale du Dashboard.",
-            ),
-            (
-                "Je suis sur la page Dashboard et le formulaire d'une note de "
-                "frais au statut « En attente » est ouvert.",
-                "Je saisis éventuellement un commentaire puis je clique sur le "
-                "bouton « Refuser ».",
-                "Le statut de la note de frais passe à « refused », mon "
-                "commentaire est enregistré et je suis redirigé vers la vue "
-                "principale du Dashboard.",
-            ),
-        ],
+        "Je suis connecté en tant qu'administrateur.",
+        "Je clique sur un ticket de note de frais et il est en statut "
+        "“en attente”.",
+        "Le formulaire de la note de frais est affiché avec l'ensemble des "
+        "champs remplis sauf son statut. Il est modifiable.",
     ),
     (
-        "V. Déconnexion",
-        [
-            (
-                "Je suis un administrateur RH authentifié sur n'importe quelle "
-                "page de l'application.",
-                "Je clique sur l'icône de déconnexion dans la barre verticale "
-                "gauche.",
-                "Ma session est supprimée du localStorage et je suis redirigé "
-                "vers la page Login.",
-            ),
-        ],
+        "Je suis connecté en tant qu'administrateur et j'ai cliqué sur un "
+        "ticket “en attente”.",
+        "Je clique sur le champ \"commentaire\".",
+        "Je peux insérer un commentaire.",
+    ),
+    (
+        "Je suis connecté en tant qu'administrateur et j'ai cliqué sur un "
+        "ticket “en attente”.",
+        "Je clique sur le bouton “accepter”.",
+        "Le statut de la note de frais apparaît comme \"accepté\" dans le "
+        "feed des notes de frais. Le nombre de notes de frais du groupe "
+        "“accepté” est incrémenté de 1 et le statut apparaît comme "
+        "“accepté” dans le tableau de notes de frais de l'employé "
+        "qui l'avait envoyée.",
+    ),
+    (
+        "Je suis connecté en tant qu'administrateur et j'ai cliqué sur un "
+        "ticket “en attente”.",
+        "Je clique sur le bouton “refuser”.",
+        "Le statut de la note de frais apparaît comme “refusé” "
+        "dans le feed des notes de frais. Le nombre de notes de frais du "
+        "groupe “refusé” est incrémenté de 1 et le statut "
+        "apparaît comme “refusé” dans le tableau de notes de "
+        "frais de l'employé qui l'avait envoyée.",
+    ),
+    (
+        "Je suis connecté en tant qu'administrateur.",
+        "Je clique sur un ticket de note de frais et il est en statut "
+        "“accepté” ou “refusé”.",
+        "Le formulaire de la note de frais ticket est affiché avec "
+        "l'ensemble des champs remplis y compris son statut. Il n'est plus "
+        "modifiable.",
+    ),
+    (
+        "Je suis connecté en tant qu'administrateur et j'ai cliqué sur une "
+        "note de frais en statut “en attente”, ou “accepté"
+        "” ou “refusé”.",
+        "Je clique sur le bouton Visualiser.",
+        "Une modale apparaît avec le PDF du justificatif.",
+    ),
+    (
+        "Je suis connecté en tant qu'administrateur et j'ai cliqué sur une "
+        "note de frais en statut “en attente”, ou “accepté"
+        "” ou “refusé”.",
+        "Je clique sur le bouton \"Télécharger\".",
+        "Le PDF du justificatif est téléchargé.",
+    ),
+    (
+        "Je suis connecté en tant qu'administrateur et je suis sur la page "
+        "Dashboard.",
+        "Je clique sur le bouton \"Se déconnecter\" de la barre verticale.",
+        "Je suis envoyé à la page Login.",
+    ),
+    (
+        "Je suis connecté en tant qu'administrateur et je suis sur la page "
+        "Dashboard.",
+        "Je clique sur le bouton \"Retour\" en arrière de la navigation.",
+        "Je reste sur la page Dashboard.",
     ),
 ]
 
@@ -338,13 +292,9 @@ def build(output_path: Path) -> Path:
         )
     )
 
-    scenario_index = 1
-    for section_title, scenarios in SECTIONS:
-        story.append(Paragraph(section_title, styles["section"]))
-        for given, when, then in scenarios:
-            table = _scenario_table(scenario_index, given, when, then, styles)
-            story.append(KeepTogether([table, Spacer(1, 0.4 * cm)]))
-            scenario_index += 1
+    for index, (given, when, then) in enumerate(SCENARIOS, start=1):
+        table = _scenario_table(index, given, when, then, styles)
+        story.append(KeepTogether([table, Spacer(1, 0.4 * cm)]))
 
     doc.build(story)
     return output_path
