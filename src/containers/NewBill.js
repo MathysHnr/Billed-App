@@ -23,13 +23,17 @@ export default class NewBill {
     const fileName = filePath[filePath.length-1]
     const fileExtension = fileName.split('.').pop().toLowerCase()
     const allowedExtensions = ['jpg', 'jpeg', 'png']
+    const errorMessage = this.document.querySelector(`p[data-testid="file-error-message"]`)
 
     if (!allowedExtensions.includes(fileExtension)) {
       fileInput.value = ''
       this.fileName = null
       this.fileUrl = null
+      if (errorMessage) errorMessage.style.display = 'block'
       return
     }
+
+    if (errorMessage) errorMessage.style.display = 'none'
 
     const formData = new FormData()
     const email = JSON.parse(localStorage.getItem("user")).email
